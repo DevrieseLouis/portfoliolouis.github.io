@@ -49,7 +49,6 @@
         overflow-x: hidden;
       }
 
-      /* CURSOR */
       * {
         cursor: none !important;
       }
@@ -84,7 +83,6 @@
         height: 20px;
       }
 
-      /* NAV */
       nav {
         position: fixed;
         top: 0;
@@ -145,7 +143,6 @@
         color: var(--bg);
       }
 
-      /* HERO */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -276,7 +273,6 @@
         }
       }
 
-      /* SECTIONS */
       section {
         padding: 8rem 4rem;
       }
@@ -299,7 +295,6 @@
         color: var(--muted);
       }
 
-      /* ABOUT */
       .about {
         border-top: 1px solid var(--border);
       }
@@ -347,7 +342,6 @@
         letter-spacing: 0.05em;
       }
 
-      /* SKILLS */
       .skills {
         border-top: 1px solid var(--border);
         background: var(--bg2);
@@ -404,7 +398,6 @@
         color: var(--accent);
       }
 
-      /* WORK */
       .work {
         border-top: 1px solid var(--border);
       }
@@ -574,7 +567,6 @@
         border-color: var(--accent);
       }
 
-      /* Decorative visual elements */
       .vis-3d {
         position: absolute;
         inset: 0;
@@ -617,7 +609,6 @@
         opacity: 0.15;
       }
 
-      /* PROCESS */
       .process {
         border-top: 1px solid var(--border);
       }
@@ -654,7 +645,6 @@
         line-height: 1.7;
       }
 
-      /* CONTACT */
       .contact {
         border-top: 1px solid var(--border);
         background: var(--bg2);
@@ -707,7 +697,6 @@
         color: var(--accent);
       }
 
-      /* FOOTER */
       footer {
         padding: 2rem 4rem;
         border-top: 1px solid var(--border);
@@ -726,7 +715,6 @@
         color: var(--text);
       }
 
-      /* DIVIDER */
       .marquee-wrap {
         border-top: 1px solid var(--border);
         border-bottom: 1px solid var(--border);
@@ -759,7 +747,6 @@
         }
       }
 
-      /* SCROLL REVEAL */
       .reveal {
         opacity: 0;
         transform: translateY(30px);
@@ -873,12 +860,308 @@
       }
 
       @media (max-width: 900px) {
+        nav {
+          padding: 1.25rem 2rem;
+        }
+        .hero {
+          padding: 0 2rem 4rem;
+        }
+        .hero-counter {
+          right: 2rem;
+        }
+        section {
+          padding: 5rem 2rem;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .skills-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .process-steps {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .featured-card.large {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .work-item {
+          grid-template-columns: 60px 1fr auto;
+          gap: 1.5rem;
+          padding: 2rem;
+        }
         .model-shell-large {
           min-height: 320px;
         }
-
         .model-shell model-viewer {
           min-height: 280px;
+        }
+      }
+      @media (max-width: 640px) {
+        * {
+          cursor: auto !important;
+        }
+        .cursor,
+        .cursor-ring {
+          display: none;
+        }
+
+        nav {
+          padding: 1rem 1.25rem;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-logo {
+          font-size: 12px;
+        }
+        .nav-cta {
+          font-size: 11px;
+          padding: 0.4rem 0.9rem;
+        }
+
+        .hero {
+          padding: 6rem 1.25rem 3rem;
+          min-height: 90vh;
+        }
+        .hero-counter {
+          display: none;
+        }
+        .hero-label {
+          font-size: 10px;
+          margin-bottom: 1.25rem;
+        }
+        .hero-name {
+          font-size: clamp(2.75rem, 14vw, 4.5rem);
+          margin-bottom: 1.75rem;
+        }
+        .hero-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1.5rem;
+        }
+        .hero-desc {
+          max-width: 100%;
+          font-size: 14px;
+        }
+        .hero-scroll {
+          flex-direction: row;
+          align-items: center;
+        }
+        .scroll-line {
+          width: 40px;
+          height: 1px;
+          background: linear-gradient(to right, var(--accent), transparent);
+        }
+
+        .marquee span {
+          font-size: 10px;
+        }
+
+        section {
+          padding: 3.5rem 1.25rem;
+        }
+        .section-title {
+          font-size: clamp(2rem, 9vw, 2.75rem);
+          margin-bottom: 2rem;
+        }
+
+        .about-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat {
+          padding: 1.25rem;
+        }
+        .stat-num {
+          font-size: 2.5rem;
+        }
+
+        .skills-grid {
+          grid-template-columns: 1fr;
+          border: 1px solid var(--border);
+        }
+        .skill-cat {
+          padding: 1.75rem;
+        }
+
+        .work-item {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+          padding: 1.5rem;
+        }
+        .work-num {
+          order: -1;
+        }
+        .work-arrow {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+        }
+        .work-info h3 {
+          font-size: 18px;
+        }
+
+        .featured-card {
+          padding: 1.75rem;
+        }
+        .featured-card h3 {
+          font-size: 1.4rem;
+        }
+        .model-shell-large {
+          min-height: 240px;
+        }
+        .model-shell model-viewer {
+          min-height: 220px;
+        }
+
+        .process-steps {
+          grid-template-columns: 1fr;
+        }
+        .step {
+          padding: 1.75rem 1.25rem;
+        }
+
+        .contact-big {
+          font-size: clamp(2.25rem, 13vw, 3.5rem);
+        }
+        .contact p {
+          max-width: 100%;
+          font-size: 14px;
+          margin-bottom: 2rem;
+        }
+        .contact-links {
+          flex-direction: column;
+          width: 100%;
+        }
+        .contact-link {
+          width: 100%;
+          text-align: center;
+          padding: 0.9rem 1.5rem;
+        }
+
+        footer {
+          flex-direction: column;
+          gap: 0.75rem;
+          padding: 1.5rem 1.25rem;
+          text-align: center;
+        }
+        footer span[style] {
+          justify-content: center !important;
+        }
+      }
+
+      @media (max-width: 400px) {
+        nav {
+          padding: 0.85rem 1rem;
+        }
+        .nav-cta {
+          font-size: 10px;
+          padding: 0.35rem 0.7rem;
+        }
+
+        .hero {
+          padding: 5.5rem 1rem 2.5rem;
+        }
+        .hero-name {
+          font-size: clamp(2.25rem, 15vw, 3.25rem);
+        }
+        .hero-label {
+          font-size: 9.5px;
+          letter-spacing: 0.15em;
+        }
+
+        section {
+          padding: 3rem 1rem;
+        }
+        .section-tag {
+          font-size: 10px;
+        }
+        .section-title {
+          font-size: clamp(1.75rem, 9vw, 2.25rem);
+        }
+
+        .about-stats {
+          grid-template-columns: 1fr 1fr;
+          gap: 1px;
+        }
+        .stat {
+          padding: 1rem;
+        }
+        .stat-num {
+          font-size: 2rem;
+        }
+        .stat-label {
+          font-size: 10.5px;
+        }
+
+        .skill-cat {
+          padding: 1.25rem;
+        }
+        .skill-cat-icon {
+          width: 32px;
+          height: 32px;
+          margin-bottom: 1rem;
+        }
+        .skill-tag {
+          font-size: 10px;
+          padding: 0.25rem 0.6rem;
+        }
+
+        .work-item {
+          padding: 1.25rem;
+        }
+        .work-info h3 {
+          font-size: 16px;
+        }
+        .work-info p {
+          font-size: 12px;
+        }
+        .work-tag-s {
+          font-size: 9px;
+        }
+
+        .featured-card {
+          padding: 1.25rem;
+        }
+        .featured-card h3 {
+          font-size: 1.2rem;
+        }
+        .featured-card p {
+          font-size: 13px;
+        }
+        .model-shell-large {
+          min-height: 190px;
+        }
+        .model-shell model-viewer {
+          min-height: 180px;
+        }
+        .vis-label {
+          font-size: 9px;
+        }
+
+        .step {
+          padding: 1.5rem 1rem;
+        }
+        .step h3 {
+          font-size: 15px;
+        }
+        .step p {
+          font-size: 12.5px;
+        }
+
+        .contact-big {
+          font-size: clamp(1.9rem, 13vw, 2.75rem);
+        }
+        .contact-link {
+          font-size: 12px;
+          padding: 0.8rem 1rem;
+        }
+
+        footer {
+          font-size: 10px;
         }
       }
     </style>
@@ -940,7 +1223,8 @@
       </div>
     </div>
 
-    <section class="about">
+    <!-- ABOUT -->
+    <section class="about" id="about">
       <div class="section-tag">01 — Over mij</div>
       <div class="about-grid">
         <div class="about-text reveal">
@@ -953,11 +1237,9 @@
           <p>
             Mijn workflow begint in <strong>Figma of Adobe XD</strong> met
             wireframes en visuele systemen, loopt via
-            <strong>Blender</strong> voor 3D-visuals of mockups. Ik heb al
-            gewerkt met volgende IDE's:
-            <strong
-              >Visual Studio, Visual Studio Code, IntelliJ & Dreamweaver</strong
-            >.
+            <strong>Blender</strong> voor 3D-visuals of mockups, en eindigt in
+            een productie-klare applicatie gebouwd op
+            <strong>Vue, Node.js en PostgreSQL</strong>.
           </p>
           <p>
             Voor Adobe-workflows beheers ik het volledige ecosysteem: Photoshop,
@@ -1197,25 +1479,22 @@
       <div class="section-tag">03 — Projecten</div>
       <h2 class="section-title reveal">Geselecteerd<br /><em>werk.</em></h2>
       <div class="work-list">
-        <a href="brickbase.html" class="work-item reveal">
+        <a href="#" class="work-item reveal">
           <span class="work-num">001</span>
           <div class="work-info">
-            <h3>BrickBase</h3>
-            <p><i>soloproject</i></p>
+            <h3>Atelier 1</h3>
+            <p><i>schoolproject</i></p>
             <p>
-              Ik ben een fervent lego-liefhebber, helaas zijn de sites/apps die
-              je vindt online om je collectie te beheren heel klungelig
-              gemaakt.<br />
-              Daarom vertrok ik vanuit het idee om maar mijn eigen
-              lego-collectie management platform te maken.
+              Voor dit project moest ik een fictieve front-end website maken
+              voor een bedrijf.<br />
+              Ik heb het bedrijf van mijn familie uitgekozen om dit te
+              verwezenlijken.
             </p>
             <div class="work-tags-small">
-              <span class="work-tag-s">HTML / CSS / JS</span>
-              <span class="work-tag-s">API-integration</span>
-              <span class="work-tag-s">C#</span>
-              <span class="work-tag-s">python</span>
-              <span class="work-tag-s">blazor</span>
-              <span class="work-tag-s">SSMS</span>
+              <span class="work-tag-s">HTML / CSS</span>
+              <span class="work-tag-s">Photoshop</span>
+              <span class="work-tag-s">Blender</span>
+              <span class="work-tag-s">Adobe XD</span>
             </div>
           </div>
           <span class="work-arrow">↗</span>
@@ -1223,24 +1502,91 @@
         <a href="#" class="work-item reveal">
           <span class="work-num">002</span>
           <div class="work-info">
-            <h3>StockBot</h3>
-            <p><i>soloproject</i></p>
+            <h3>Atelier 2</h3>
+            <p><i>schoolproject</i></p>
             <p>
-              Kansberekening of een aandeel het goed zal doen op de beurs op
-              basis van te trainen op candles.<br />
-              Ik wou kijken in welke mate het mogelijk is de koers te
-              voorspellen.
+              Voor deze opdracht kregen we de kans een fictieve site te maken
+              voor de <strong>"De Sinksen"</strong>.<br />
+              Iedereen kreeg een ander design style toegewezen, ik kreeg de
+              combo van zuid-amerikaans / speels.
             </p>
             <div class="work-tags-small">
-              <span class="work-tag-s">python / pytorch / pandas</span>
+              <span class="work-tag-s">HTML / CSS</span>
+              <span class="work-tag-s">Photoshop</span>
+              <span class="work-tag-s">Illustrator</span>
+              <span class="work-tag-s">Blender</span>
+              <span class="work-tag-s">Adobe Aero</span>
+              <span class="work-tag-s">Adobe XD</span>
+              <span class="work-tag-s">API's</span>
+            </div>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+        <a href="#" class="work-item reveal">
+          <span class="work-num">003</span>
+          <div class="work-info">
+            <h3>Atelier 3</h3>
+            <p><i>schoolproject</i></p>
+            <p>
+              Atelier 3 was het eerste groepsproject dat we toegewezen kregen,
+              ieder lid kreeg een andere verantwoordelijkheid.<br />
+              Ik was een van de verantwoordelijke voor het designen en de
+              verantwoordelijke voor het JavaScript gedeelte.
+            </p>
+            <div class="work-tags-small">
               <span class="work-tag-s">HTML / CSS / JS</span>
-              <span class="work-tag-s">Machine learning</span>
+              <span class="work-tag-s">Adobe XD / Figma</span>
+              <span class="work-tag-s">Photoshop / Illustrator</span>
+              <span class="work-tag-s">Groupskills (m.d.h.v Notion)</span>
+            </div>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+        <a href="#" class="work-item reveal">
+          <span class="work-num">004</span>
+          <div class="work-info">
+            <h3>Atelier 4</h3>
+            <p><i>schoolproject</i></p>
+            <p>
+              Dit was het tweede groepsproject, we hadden een webshop gemaakt
+              die de potentiële klant makkelijk zou kunnen aanpassen met CMS.<br />
+              Het betaalsysteem dat we hiervoor gebruikten was Mollie
+            </p>
+            <div class="work-tags-small">
+              <span class="work-tag-s">HTML / CSS / JS</span>
+              <span class="work-tag-s">Adobe XD / Figma</span>
+              <span class="work-tag-s">Photoshop / Illustrator</span>
+              <span class="work-tag-s">Twig.js / Vue.js</span>
+              <span class="work-tag-s">Implementatie betaalsystemen</span>
+              <span class="work-tag-s">Groupskills (m.d.h.v Notion)</span>
+            </div>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+        <a href="#" class="work-item reveal">
+          <span class="work-num">005</span>
+          <div class="work-info">
+            <h3>Internship @ Marcando</h3>
+            <p>Mijn stage bestond uit 2 opdrachten:<br /></p>
+            <li><p>De clean-up van de back-end.</p></li>
+            <li>
+              <p>
+                Het ontwikkelen van een webshop-builder voor mensen die geen
+                programmeerkennis hebben.<br />
+                Na mijn stage mocht ik daar ook studentenjob doen voor het
+                project af te werken.
+              </p>
+            </li>
+            <div class="work-tags-small">
+              <span class="work-tag-s">IntelliJ</span>
+              <span class="work-tag-s">Xaml</span>
+              <span class="work-tag-s">Vue.js</span>
+              <span class="work-tag-s">Back-end</span>
             </div>
           </div>
           <span class="work-arrow">↗</span>
         </a>
       </div>
-      <p>(voor al mijn werk, zie <a href="#work">Werk</a>)</p>
     </section>
 
     <section class="featured artworks-3d" id="artworks">
@@ -1382,13 +1728,11 @@
       }
       animCursor();
 
-      // Nav scroll
       const nav = document.getElementById("nav");
       window.addEventListener("scroll", () => {
         nav.classList.toggle("scrolled", window.scrollY > 60);
       });
 
-      // Scroll reveal
       const reveals = document.querySelectorAll(".reveal");
       const obs = new IntersectionObserver(
         (entries) => {
@@ -1403,7 +1747,6 @@
       );
       reveals.forEach((el) => obs.observe(el));
 
-      // Footer back to top
       document
         .querySelector('footer a[href="#"]')
         .addEventListener("click", (e) => {
