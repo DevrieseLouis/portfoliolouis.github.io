@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Projectcase voor BrickBase, een LEGO-collectiebeheerplatform."
+    />
+    <title>BrickBase | Louis Devriese</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #0a0a0b;
+        --bg2: #111114;
+        --bg3: #1a1a1f;
+        --accent: #479dff;
+        --accent2: #ff6b35;
+        --text: #f0ede6;
+        --muted: #8a8880;
+        --border: rgba(255, 255, 255, 0.07);
+        --serif: "Instrument Serif", serif;
+        --sans: "Syne", sans-serif;
+        --mono: "DM Mono", monospace;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      * {
+        cursor: none !important;
+      }
+      .cursor {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.2s,
+          height 0.2s,
+          background 0.2s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(71, 157, 255, 0.45);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: all 0.12s ease;
+      }
+      body:has(a:hover) .cursor,
+      body:has(button:hover) .cursor {
+        width: 20px;
+        height: 20px;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 4rem;
+        border-bottom: 1px solid transparent;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+      }
+      nav.scrolled {
+        background: rgba(10, 10, 11, 0.92);
+        backdrop-filter: blur(12px);
+        border-color: var(--border);
+      }
+      .nav-logo {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.05em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 12px;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-cta {
+        font-family: var(--mono);
+        font-size: 12px;
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.05em;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 9rem 4rem 5rem;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 70% 55% at 72% 35%,
+            rgba(71, 157, 255, 0.11),
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 50% 45% at 15% 90%,
+            rgba(255, 107, 53, 0.05),
+            transparent 70%
+          );
+      }
+      .hero-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          black 15%,
+          transparent 78%
+        );
+        opacity: 0.45;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow,
+      .section-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .eyebrow {
+        margin-bottom: 1.75rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.15s forwards;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-size: clamp(4.5rem, 12vw, 10rem);
+        font-weight: 400;
+        line-height: 0.85;
+        letter-spacing: -0.03em;
+        max-width: 1000px;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.3s forwards;
+      }
+      h1 em {
+        color: var(--accent);
+        font-style: italic;
+      }
+      .hero-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 2rem;
+        margin-top: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.5s forwards;
+      }
+      .hero-description {
+        max-width: 530px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.85;
+      }
+      .hero-meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
+        gap: 2rem;
+        min-width: 380px;
+      }
+      .meta-label {
+        display: block;
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        margin-bottom: 0.45rem;
+      }
+      .meta-value {
+        font-size: 13px;
+        color: var(--text);
+      }
+      .hero-count {
+        position: absolute;
+        right: 4rem;
+        top: 50%;
+        transform: translateY(-50%);
+        writing-mode: vertical-lr;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.18);
+        letter-spacing: 0.2em;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      section {
+        padding: 8rem 4rem;
+      }
+      .section-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+        margin-bottom: 3.5rem;
+        align-items: end;
+      }
+      .section-title {
+        font-family: var(--serif);
+        font-size: clamp(2.7rem, 5vw, 4.5rem);
+        line-height: 1;
+        font-weight: 400;
+      }
+      .section-title em {
+        color: var(--muted);
+        font-style: italic;
+      }
+      .section-intro {
+        color: var(--muted);
+        max-width: 620px;
+        line-height: 1.9;
+      }
+      .overview {
+        border-bottom: 1px solid var(--border);
+      }
+      .overview-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .overview-copy,
+      .overview-side {
+        background: var(--bg);
+        padding: 3rem;
+      }
+      .overview-copy p {
+        color: var(--muted);
+        line-height: 1.9;
+        max-width: 700px;
+      }
+      .overview-copy p + p {
+        margin-top: 1.25rem;
+      }
+      .overview-copy strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .overview-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      .side-heading {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+      }
+      .tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        padding: 0.35rem 0.7rem;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+      .tag.accent {
+        color: var(--accent);
+        border-color: rgba(71, 157, 255, 0.4);
+      }
+
+      .media {
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+      }
+      .media-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: minmax(260px, 430px) minmax(180px, 260px);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .media-placeholder {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        min-height: 220px;
+        padding: 1.5rem;
+        overflow: hidden;
+        background: var(--bg3);
+        isolation: isolate;
+      }
+      .media-placeholder.large {
+        grid-row: 1 / 3;
+      }
+      .media-placeholder::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.045) 1px,
+            transparent 1px
+          );
+        background-size: 24px 24px;
+        opacity: 0.8;
+      }
+      .media-placeholder::after {
+        content: "";
+        position: absolute;
+        width: 60%;
+        aspect-ratio: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid rgba(71, 157, 255, 0.28);
+        border-radius: 50%;
+        box-shadow:
+          0 0 80px rgba(71, 157, 255, 0.13),
+          inset 0 0 60px rgba(71, 157, 255, 0.06);
+      }
+      .placeholder-number,
+      .placeholder-text {
+        position: relative;
+        z-index: 1;
+      }
+      .placeholder-number {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.4rem;
+      }
+      .placeholder-text {
+        font-family: var(--mono);
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .media-hint {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 1rem;
+      }
+
+      .challenge {
+        border-bottom: 1px solid var(--border);
+      }
+      .challenge-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        border: 1px solid var(--border);
+        background: var(--border);
+      }
+      .challenge-card {
+        background: var(--bg);
+        padding: 2.5rem;
+        transition: background 0.2s;
+      }
+      .challenge-card:hover {
+        background: var(--bg3);
+      }
+      .card-no {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 11px;
+        margin-bottom: 2.5rem;
+      }
+      .challenge-card h3 {
+        font-size: 17px;
+        margin-bottom: 0.75rem;
+      }
+      .challenge-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .research {
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+      }
+      .research-layout {
+        display: grid;
+        grid-template-columns: 0.9fr 2.1fr;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .research-aside,
+      .research-main {
+        background: var(--bg2);
+        padding: 3rem;
+      }
+      .research-aside {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100%;
+      }
+      .research-aside p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .download-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        margin-top: 2rem;
+        padding: 0.9rem 1rem;
+        color: var(--accent);
+        border: 1px solid rgba(71, 157, 255, 0.45);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .download-button:hover {
+        background: var(--accent);
+        color: var(--bg);
+      }
+      .research-plan {
+        display: grid;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .plan-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 1.5rem;
+        padding: 2rem;
+        background: var(--bg);
+      }
+      .plan-number {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+      }
+      .plan-content h3 {
+        font-size: 15px;
+        margin-bottom: 0.65rem;
+      }
+      .plan-content p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .plan-content ul {
+        margin-top: 1rem;
+        padding-left: 1.1rem;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.9;
+      }
+      .research-note {
+        margin-top: 1rem;
+        padding: 1rem 1.25rem;
+        border-left: 2px solid var(--accent2);
+        background: rgba(255, 107, 53, 0.06);
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .results {
+        border-bottom: 1px solid var(--border);
+      }
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .result {
+        background: var(--bg);
+        padding: 2.25rem;
+      }
+      .result-number {
+        color: var(--accent);
+        font-family: var(--serif);
+        font-size: 3.4rem;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+      .result-label {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .links {
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+      }
+      .link-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .project-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: 2rem;
+        min-height: 190px;
+        background: var(--bg2);
+        transition: background 0.2s;
+      }
+      .project-link:hover {
+        background: var(--bg3);
+      }
+      .project-link .link-type {
+        display: block;
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+      }
+      .project-link h3 {
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+      }
+      .project-link p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .project-link .arrow {
+        display: block;
+        margin-top: 1rem;
+        color: var(--muted);
+        font-size: 20px;
+        transition:
+          transform 0.2s,
+          color 0.2s;
+      }
+      .project-link:hover .arrow {
+        transform: translate(5px, -5px);
+        color: var(--accent);
+      }
+
+      .next-project {
+        padding: 7rem 4rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+      }
+      .next-project p {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .next-project a {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 1;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .next-project a em {
+        color: var(--accent);
+        font-style: italic;
+      }
+      .next-project a:hover {
+        color: var(--accent);
+      }
+
+      footer {
+        padding: 2rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      footer a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--text);
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          padding: 1.25rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-cta {
+          font-size: 10px;
+          padding: 0.45rem 0.65rem;
+        }
+        .hero,
+        section {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        .hero {
+          padding-bottom: 3rem;
+        }
+        .hero-bottom,
+        .section-header {
+          display: block;
+        }
+        .hero-meta {
+          margin-top: 2rem;
+          min-width: 0;
+          gap: 1rem;
+        }
+        .hero-count {
+          display: none;
+        }
+        .section-header {
+          margin-bottom: 2.25rem;
+        }
+        .section-tag {
+          margin-bottom: 1rem;
+        }
+        .section-intro {
+          margin-top: 1rem;
+        }
+        .overview-grid,
+        .research-layout,
+        .featured-card {
+          grid-template-columns: 1fr;
+        }
+        .challenge-grid,
+        .link-grid {
+          grid-template-columns: 1fr;
+        }
+        .results-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .media-grid {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+        }
+        .media-placeholder.large {
+          grid-row: auto;
+          min-height: 320px;
+        }
+        .research-aside,
+        .research-main,
+        .overview-copy,
+        .overview-side {
+          padding: 2rem;
+        }
+        .plan-item {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+        .next-project {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        footer {
+          padding: 1.5rem;
+          gap: 1rem;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+      @media (pointer: coarse) {
+        * {
+          cursor: auto !important;
+        }
+        .cursor,
+        .cursor-ring {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav id="nav">
+      <a href="index.html" class="nav-logo">LD — PORTFOLIO</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Over mij</a></li>
+        <li><a href="Work.html">Alle projecten</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#links">Links</a></li>
+      </ul>
+      <a href="mailto:louishenri.devriese@gmail.com" class="nav-cta"
+        >Contact opnemen</a
+      >
+    </nav>
+
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-count">project 1</div>
+      <div class="hero-content">
+        <p class="eyebrow">Soloproject / Collectiebeheer</p>
+        <h1>Brick<em>Base.</em></h1>
+        <div class="hero-bottom">
+          <p class="hero-description">
+            Een platform waar iedereen zijn LEGO-collectie overzichtelijk kan
+            beheren en sets te ontdekken.
+          </p>
+          <div class="hero-meta">
+            <div>
+              <span class="meta-label">Rol</span
+              ><span class="meta-value">Developer/Designer</span>
+            </div>
+            <div>
+              <span class="meta-label">Periode</span
+              ><span class="meta-value">01/08/26</span>
+            </div>
+            <div>
+              <span class="meta-label">Status</span
+              ><span class="meta-value">Nog in ontwikkeling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="overview" id="overview">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-tag">01 — Over het project</p>
+          <h2 class="section-title">
+            Van frustratie naar<br /><em>oplossing.</em>
+          </h2>
+        </div>
+        <p class="section-intro">
+          BrickBase vertrekt vanuit een persoonlijke frustratie. Namelijk vele
+          gelijkaardige websites of apps hebben een vreselijke lay-out, zijn
+          niet responsief en zijn gebrekkig aan bepaalde functionaliteiten. Dus
+          besloot ik het maar zelf te doen.
+        </p>
+      </div>
+      <div class="overview-grid reveal">
+        <div class="overview-copy">
+          <h1>Skills die ik gebruikt heb.</h1>
+        </div>
+        <aside class="overview-side">
+          <div>
+            <p class="side-heading">Technologieën</p>
+            <div class="tag-list" style="margin-top: 1rem">
+              <span class="tag accent">HTML</span
+              ><span class="tag accent">CSS</span
+              ><span class="tag accent">JavaScript</span
+              ><span class="tag accent">C#</span
+              ><span class="tag accent">Python</span
+              ><span class="tag accent">Blazor</span
+              ><span class="tag accent">SSMS</span
+              ><span class="tag accent">API-integration</span>
+            </div>
+          </div>
+          <div>
+            <p class="side-heading">Extra</p>
+            <div class="tag-list" style="margin-top: 1rem">
+              <span class="tag accent">Research</span
+              ><span class="tag accent">Design system</span
+              ><span class="tag accent">Account & data security</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="challenge" id="challenge">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-tag">02 — Focus</p>
+          <h2 class="section-title">Wat kan<br /><em>beter?</em></h2>
+        </div>
+      </div>
+      <div class="challenge-grid">
+        <article class="challenge-card reveal">
+          <p class="card-no">01 / Security</p>
+          <h3>Cybersecurity</h3>
+          <p>
+            Ik heb alles omtrent security mezelf moeten aanleren mede dankzij
+            dit project.<br />
+            momenteel is er enkel
+            <strong>"SQL-injection"</strong> prevention en ben ik bezig met
+            <strong>"rate-limiting"</strong>.
+          </p>
+        </article>
+        <article class="challenge-card reveal">
+          <p class="card-no">02 / Design</p>
+          <h3>UI/UX interface</h3>
+          <p>
+            Mijn primaire focus ligt om alles eerst te laten werken met basic
+            lay-out.<br />
+            Pas na dat alles functioneel is zal ik me focussen op het mooi maken
+            van de site.
+          </p>
+        </article>
+        <article class="challenge-card reveal">
+          <p class="card-no">03 / GitHub</p>
+          <h3>Commit messages</h3>
+          <p>
+            Mijn commit messages zijn vaak wat kort, hoe dan ook ze blijven
+            duidelijk.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="research" id="research">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-tag">03 — Researchplan</p>
+          <h2 class="section-title">Onderzoek<br /><em>met richting.</em></h2>
+        </div>
+      </div>
+      <div class="research-layout reveal">
+        <aside class="research-aside">
+          <div>
+            <p class="side-heading">Doel van het onderzoek</p>
+            <p style="margin-top: 1rem">
+              Achterhalen welke functionaliteiten LEGO-verzamelaars verwachten,
+              en hoe bestaande sites daar te kort op schieten. Welke informatie
+              en functies essentieel kunnen zijn voor een beter
+              collectieplatform.
+            </p>
+          </div>
+          <p>De volledige researchplan zie je in de repo.</p>
+          <p
+            style="
+              font-family: var(--mono);
+              font-size: 10px;
+              margin-top: 1rem;
+              color: var(--muted);
+            "
+          ></p>
+        </aside>
+        <div class="research-main">
+          <div class="research-plan">
+            <article class="plan-item">
+              <div class="plan-number">01</div>
+              <div class="plan-content">
+                <h3>Doelstelling & Probleemstelling</h3>
+                <p>
+                  Hoe kan ik de verschillende functionaliteiten van BrickLink,
+                  Brickset en ReBrickable samenbrengen in 1 modern,
+                  mobielvriendelijk platform wat het beheren en kopen van LEGO
+                  makkelijker maakt voor kopers, verkopers en verzamelaars?
+                </p>
+              </div>
+            </article>
+            <article class="plan-item">
+              <div class="plan-number">02</div>
+              <div class="plan-content">
+                <h3>Concurrentieanalyse</h3>
+                <p>
+                  Wat zijn de sterktes en zwaktes van de grote concurrenten?<br />
+                  Wat is hun betaalmodel en wat is de doorslag voor een user om
+                  voor die site te kiezen?<br />
+                  Hieronder zijn links naar de concurrenten:
+                </p>
+                <ul>
+                  <li>
+                    <a href="https://www.bricklink.com/v2/main.page"
+                      >BrickLink</a
+                    >
+                  </li>
+                  <li><a href="https://rebrickable.com/">Rebrickable</a></li>
+                  <li><a href="https://brickset.com/">Brickset</a></li>
+                </ul>
+              </div>
+            </article>
+            <article class="plan-item">
+              <div class="plan-number">03</div>
+              <div class="plan-content">
+                <h3>Gebruikersonderzoek</h3>
+                <p>Rondgaan of anderen akkoord gaan met mijn frustraties.</p>
+                <ul>
+                  <li>Via forums</li>
+                  <li>Via steekproeven aan verzamelaars en kennissen</li>
+                  <li>Vergelijken met andere (gerelateerde) websites & apps</li>
+                </ul>
+              </div>
+            </article>
+            <article class="plan-item">
+              <div class="plan-number">04</div>
+              <div class="plan-content">
+                <h3>Technisch & Data Onderzoek</h3>
+                <ul>
+                  <li>
+                    Voor data ben ik terecht gekomen bij een gratis API van
+                    LEGO, dit voorkomt dat ik van nul moet beginnen. Zolang ik
+                    het maar niet voor commerciële doeleinden gebruik. Dus later
+                    in het project zal ik een alternatief moeten vinden.
+                  </li>
+                  <li>
+                    Ik heb SSMS gekozen als database, het is mijn all-time
+                    favorite omdat het zo overzichtelijk is.
+                  </li>
+                  <li>
+                    Ik koos voor <strong>blazor</strong> omdat de populariteit
+                    steeds toeneemt. De doorslag voor deze keuze is voor als ik
+                    het later als mobile application wil uitbrengen, geen Kotlin
+                    (android) of Swift (apple) moet leren. Het Blazor .NET MAUI
+                    Hybrid is compatibel voor beiden en bespaart je op die
+                    manier dagen werk.
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="results" id="results">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-tag">04 — Resultaten</p>
+          <h2 class="section-title">
+            Wat komt er uit het onderzoek?<br /><em>en hoe ver zit ik?</em>
+          </h2>
+        </div>
+      </div>
+      <div class="results-grid reveal">
+        <div class="result">
+          <p class="result-number">14</p>
+          <p class="result-label">Steekproeven afgelegd met de doelgroep.</p>
+        </div>
+        <div class="result">
+          <p class="result-number">8</p>
+          <p class="result-label">Feedbacks</p>
+        </div>
+        <div class="result">
+          <p class="result-number">≈ 85%</p>
+          <p class="result-label">Van het project voltooid.</p>
+        </div>
+        <div class="result">
+          <p class="result-number">100%</p>
+          <p class="result-label">Motivatie</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="links" id="links">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-tag">06 — Projectlinks</p>
+          <h2 class="section-title">Bekijk of<br /><em>download.</em></h2>
+        </div>
+        <p class="section-intro">
+          Koppel hier de uiteindelijke live demo, GitHub-repository,
+          Figma-prototype of researchdocument. Zolang er geen link is, blijven
+          dit veilige placeholders.
+        </p>
+      </div>
+      <div class="link-grid">
+        <a
+          class="project-link reveal"
+          href="https://github.com/codingLouis/brickbase"
+          target="_blank"
+          rel="noreferrer"
+          ><span class="link-type">Repository</span>
+          <h3>Source code</h3>
+          <p>
+            "https://github.com/codingLouis/brickbase", bekijk de technische
+            implementatie en documentatie.
+          </p>
+          <span class="arrow">↗</span></a
+        >
+        <a
+          class="project-link reveal"
+          href="src/brickbase.pdf"
+          target="_blank"
+          rel="noreferrer"
+          ><span class="link-type">Proces</span>
+          <h3>Design &amp; research</h3>
+          <p>Bekijk het ontwerp.</p>
+          <span class="arrow">↗</span></a
+        >
+      </div>
+    </section>
+
+    <section class="next-project">
+      <p>Verder kijken</p>
+      <a href="Work.html">Alle <em>projecten.</em></a>
+    </section>
+
+    <footer>
+      <span>© 2025 Louis Devriese — Torhout, België</span>
+      <span style="display: flex; gap: 2rem"
+        ><a href="Work.html">← Alle projecten</a
+        ><a href="#">Terug naar boven ↑</a></span
+      >
+    </footer>
+
+    <script>
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (event) => {
+        mx = event.clientX;
+        my = event.clientY;
+      });
+      function animateCursor() {
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+      const nav = document.getElementById("nav");
+      window.addEventListener("scroll", () =>
+        nav.classList.toggle("scrolled", window.scrollY > 60),
+      );
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      reveals.forEach((element) => observer.observe(element));
+      document
+        .querySelector('footer a[href="#"]')
+        .addEventListener("click", (event) => {
+          event.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+  </body>
+</html>
